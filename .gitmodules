@@ -1,0 +1,4 @@
+[submodule "FConsole"]
+	path = FConsole
+	url = https://github.com/gmfCoding/FConsole
+	branch = main

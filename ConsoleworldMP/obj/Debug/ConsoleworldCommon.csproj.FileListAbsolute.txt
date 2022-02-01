@@ -1,0 +1,14 @@
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\bin\Debug\ConsoleworldMP.exe.config
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\bin\Debug\ConsoleworldMP.exe
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\bin\Debug\ConsoleworldMP.pdb
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\obj\Debug\ConsoleworldCommon.csproj.CoreCompileInputs.cache
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\obj\Debug\ConsoleworldMP.exe
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\obj\Debug\ConsoleworldMP.pdb
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\obj\Debug\ConsoleworldCommon.csproj.AssemblyReference.cache
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\bin\Debug\FastConsole.dll
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\bin\Debug\FastConsole.pdb
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\bin\Debug\FastConsole.dll.config
+G:\Projects\Software\C#\ConsoleworldMP\ConsoleworldMP\obj\Debug\ConsoleworldCommon.csproj.CopyComplete
+G:\Projects\Software\C#\ConsoleworldMP\Build\Debug\ConsoleworldMP.exe.config
+G:\Projects\Software\C#\ConsoleworldMP\Build\Debug\ConsoleworldMP.exe
+G:\Projects\Software\C#\ConsoleworldMP\Build\Debug\ConsoleworldMP.pdb

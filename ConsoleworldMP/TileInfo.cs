@@ -9,26 +9,45 @@ namespace Consoleworld
 {
     public class TileInfo : IBinarySerialisation
     {
-        public string name;
-        public char character;
-        public ConsoleColor colour;
-        public ConsoleColor backgroundColour = ConsoleColor.Black;
+        public string Name { get; private set; }
+        public char Character { get; private set; }
+        public Tile TileID { get; set; }
+        public ConsoleColor Colour { get; private set; }
+        public ConsoleColor BackgroundColour { get; private set; } = ConsoleColor.Black;
+
+        public TileInfo()
+        {
+
+        }
+
+        public TileInfo(string name, char character, byte tileID, ConsoleColor colour, ConsoleColor backgroundColour)
+        {
+            Name = name;
+            Character = character;
+            TileID = tileID;
+            Colour = colour;
+            BackgroundColour = backgroundColour;
+        }
 
         public void Read(BinaryReader br)
         {
-            name = br.ReadString();
-            character = br.ReadChar();
-            colour = (ConsoleColor)br.ReadByte();
-            backgroundColour = (ConsoleColor)br.ReadByte();
+            Name = br.ReadString();
+            TileID = br.ReadByte();
+            Character = br.ReadChar();
+            Colour = (ConsoleColor)br.ReadByte();
+            BackgroundColour = (ConsoleColor)br.ReadByte();
         }
 
         public void Write(BinaryWriter bw)
         {
-            bw.Write(name);
-            bw.Write(character);
-            bw.Write((byte)colour);
-            bw.Write((byte)backgroundColour);
+            bw.Write(Name);
+            bw.Write(TileID);
+            bw.Write(Character);
+            bw.Write((byte)Colour);
+            bw.Write((byte)BackgroundColour);
         }
+
+        public static implicit operator Tile(TileInfo d) => d.TileID;
     }
 
     unsafe struct TileStruct

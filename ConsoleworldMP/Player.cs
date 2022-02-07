@@ -7,25 +7,34 @@ using System.Threading.Tasks;
 
 namespace Consoleworld
 {
-    class Player : IBinarySerialisation
+    public class Player : IBinarySerialisation
     {
-        PlayerAuth auth;
-
-        string name;
-        Guid playerUUID;
-        int playerID;
-
+        // The unique server-game persisting player id.
+        ushort playerID;
+        // The area that the player is in.
         int areaID;
-        int x, y;
+        // The tile coordinates the player is at.
+        short x, y;
+
+        public string GetName()
+        {
+            return Instance.Get().playerManager.GetPlayerName(playerID);
+        }
 
         public void Read(BinaryReader br)
         {
-
+            playerID = br.ReadUInt16();
+            areaID = br.ReadInt32();
+            x = br.ReadInt16();
+            y = br.ReadInt16();
         }
 
         public void Write(BinaryWriter bw)
         {
-            throw new NotImplementedException();
+            bw.Write(playerID);
+            bw.Write(areaID);
+            bw.Write(x);
+            bw.Write(y);
         }
     }
 }

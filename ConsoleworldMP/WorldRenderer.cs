@@ -19,10 +19,10 @@ namespace Consoleworld
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (world.world[y , x] != null)
+                    if (world.world[y , x] != 0x0b)
                     {
-                        TileInfo t = world.world[y, x];
-                        console.WriteAt(t.character, x, y,t.colour, t.backgroundColour);
+                        TileInfo t = TileManager.GetTileInfo(world.world[y, x]);
+                        console.WriteAt(t.Character, x, y,t.Colour, t.BackgroundColour);
                     }
                 }
             }

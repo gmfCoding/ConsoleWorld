@@ -44,19 +44,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicFrameTimer.cs" />
     <Compile Include="ColourConsole.cs" />
+    <Compile Include="DefaultTiles.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IBinarySerialisation.cs" />
+    <Compile Include="BiDict.cs" />
+    <Compile Include="INetworkable.cs" />
+    <Compile Include="Instance.cs" />
     <Compile Include="Packets\PlayerLoginBase.cs" />
     <Compile Include="Packets\PlayerLoginWithUUID.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerAuth.cs" />
+    <Compile Include="PlayerManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IOPaths.cs" />
     <Compile Include="SaveLoadUtil.cs" />
     <Compile Include="ListSerialiser.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="TileInfo.cs" />
     <Compile Include="TileManager.cs" />
     <Compile Include="World.cs" />
     <Compile Include="WorldArea.cs" />

@@ -20,8 +20,15 @@ namespace CWEditorCLI
 
         WorldBrush brush;
 
+        int curX;
+        int curY;
+
+        InputPossiblities possiblities = new InputPossiblities(true, true);
+
         public WorldEditor()
         {
+            possiblities.Add(new InputPossiblity(CreateWorldDialogue, "Create a new World.", "create", "new"));
+            possiblities.Add(new InputPossiblity(OpenWorldDialogue, "Open a world to view/edit.", "open", "load"));
             tiles = new TileInfo[50, 50];
             brush = new WorldBrush(References.GetReference<TileEditor>("tile_editor"), 50, 50, tiles);
         }
@@ -30,37 +37,53 @@ namespace CWEditorCLI
         {
             return $"WorldEditor:{levelName}";
         }
-
-
-        int curX;
-        int curY;
-        float timer;
             
 
         public void Open()
         {
-           
+            possiblities.Input();
+        }
 
+        /// <summary>
+        /// Load a world dialogue
+        /// </summary>
+        void OpenWorldDialogue()
+        {
+            Console.WriteLine("World file path:");
+        }
+
+
+        /// <summary>
+        /// Edit the currently loaded world
+        /// </summary>
+        void WorldEdit()
+        {
             bool done = false;
-            Stopwatch time = new Stopwatch();
-
             Cons console = new Cons(0, 0, 50, 50);
-            while (!done)
+            BasicFrameTimer bft = new BasicFrameTimer();
+            while (bft.Loop(out double dt))
             {
-                double dt = time.Elapsed.TotalSeconds;
-                timer += (float)dt;
-                time.Restart();
-                Console.CursorVisible = false;
+                brush.Update();
+            }
+        }
 
+        /// <summary>
+        /// View the currently loaded world
+        /// </summary>
+        void WorldViewer()
+        {
+            Cons console = new Cons(0, 0, 50, 50);
+            BasicFrameTimer bft = new BasicFrameTimer();
+            while (bft.Loop(out double dt))
+            {
+                Console.CursorVisible = false;
                 RenderUtil.RenderWorld(tiles, console);
 
                 Input.Update();
 
-
                 curX = Util.Clamp((int)curX, 0, width);
                 curY = Util.Clamp((int)curY, 0, height);
 
-                Console.BackgroundColor = ConsoleColor.Black;
 
                 if (Input.GetKey(KeyCode.Left))
                 {
@@ -82,26 +105,20 @@ namespace CWEditorCLI
                     curY++;
                 }
 
-
                 if (Input.GetKeyDown(KeyCode.X))
                 {
-                    done = true;
+                    bft.Exit();
                     break;
                 }
-                //sb.Clear();
-                time.Stop();
-
             }
         }
 
-        void Create()
+        void CreateWorldDialogue()
         {
-            Console.WriteLine("Creating a new world, please specify info:");
+            Console.WriteLine("Creating a new world, please specify:");
+            string worldName = ConReadConfirm.Read("Please enter a world name. \nName:");
             int width = ConReaders.widthReader.Read();
             int height = ConReaders.heightReader.Read();
-            string worldName = ConReadConfirm.Read("Please enter a world name. \nName:");
-
-
         }
     }
 }

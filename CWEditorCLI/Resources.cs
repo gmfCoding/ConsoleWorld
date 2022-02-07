@@ -33,7 +33,7 @@ namespace CWEditorCLI
                         Directory.CreateDirectory(path);
                     }
 
-                    using (var stream = File.Create(Path.Combine(path, tile.name + ".tile")))
+                    using (var stream = File.Create(Path.Combine(path, tile.Name + ".tile")))
                     {
                         stream.Write(bytes, 0, bytes.Length);
                     }
@@ -58,7 +58,7 @@ namespace CWEditorCLI
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine($"Couldn't save : {Path.Combine(path, item.name)}.tile");
+                    Console.WriteLine($"Couldn't save : {Path.Combine(path, item.Name)}.tile");
                 }
             }
         }

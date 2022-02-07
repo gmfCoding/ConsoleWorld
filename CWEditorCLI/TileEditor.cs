@@ -58,17 +58,17 @@ namespace CWEditorCLI
 
         public void Add(TileInfo tile)
         {
-            tiles.Add(tile.name, tile);
+            tiles.Add(tile.Name, tile);
         }
 
         private void View()
         {
             foreach (var tile in tiles.Values)
             {
-                Conlog.WriteLine($"{tile.name}:", ConsoleColor.Yellow);
-                Conlog.WriteLine($"{tile.character}{tile.character}{tile.character}", tile.colour);
-                Conlog.WriteLine($"{tile.character}{tile.character}{tile.character}", tile.colour);
-                Conlog.WriteLine($"{tile.character}{tile.character}{tile.character}", tile.colour);
+                Conlog.WriteLine($"{tile.Name}:", ConsoleColor.Yellow);
+                Conlog.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
+                Conlog.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
+                Conlog.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
                 Console.WriteLine();
             }
         }

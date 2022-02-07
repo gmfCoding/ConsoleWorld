@@ -49,7 +49,9 @@
     <Compile Include="ConReadConfirm.cs" />
     <Compile Include="ConValueReader.cs" />
     <Compile Include="CSaveCursorCon.cs" />
+    <Compile Include="CursorVisibility.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="InputPossiblities.cs" />
     <Compile Include="NativeKeyboard.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -59,6 +61,7 @@
     <Compile Include="References.cs" />
     <Compile Include="RenderUtil.cs" />
     <Compile Include="Resources.cs" />
+    <Compile Include="SaveDefaultTiles.cs" />
     <Compile Include="ScreenBuffer.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="WorldBrush.cs" />

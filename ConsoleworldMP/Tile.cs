@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Consoleworld
 {
-    class Tile
+    public struct Tile
     {
         byte tileType;
+
+        public static implicit operator byte(Tile d) => d.tileType;
+        public static implicit operator Tile(byte b) => new Tile() {  tileType = b };
     }
 }

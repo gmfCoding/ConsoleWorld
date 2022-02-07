@@ -20,7 +20,7 @@ namespace CWEditorCLI
                 {
                     if (world[i, j] != null)
                     {
-                        console.WriteAt(world[i, j].character, i, j, world[i, j].colour, world[i, j].backgroundColour);
+                        console.WriteAt(world[i, j].Character, i, j, world[i, j].Colour, world[i, j].BackgroundColour);
                     }
                 }
             }

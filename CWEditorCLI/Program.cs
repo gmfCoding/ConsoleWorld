@@ -24,11 +24,6 @@ namespace CWEditorCLI
             MoveWindow(Process.GetCurrentProcess().MainWindowHandle, 0, 0, 550, 900, true);
             Console.CursorVisible = false;
 
-            
-
-
-
-
             //Cons console = new Cons(0, 0, 50, 50);
 
 
@@ -45,8 +40,6 @@ namespace CWEditorCLI
             References.AddReference("world_editor", worldEditor);
             References.AddReference("editor_selector", edsel);
 
-
-            worldEditor.Open();
             edsel.Register("tile", () => tileEditor);
             edsel.Register("world", () => worldEditor);
 

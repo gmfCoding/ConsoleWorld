@@ -20,24 +20,25 @@ namespace Consoleworld
 
             TileManager.LoadTilesFromPath();
 
-            //{
-            //    World gen = new World();
-            //    gen.Init("example_world", 3, 3);
-            //    Cons cons = new Cons(0, 0, (short)gen.Width, (short)gen.Height);
-            //    //gen.Randomise();
-            //    gen.Fill(TileManager.Get("water"));
-            //    gen.world[1, 1] = TileManager.Get("sand");
+            {
+                World gen = new World();
+                gen.Init("example_world", 3, 3);
+                Cons cons = new Cons(0, 0, (short)gen.Width, (short)gen.Height);
+                //gen.Randomise();
+                gen.Fill(TileManager.Get("water"));
+                gen.world[1, 1] = TileManager.Get("sand");
 
-            //    SaveWorld(gen, "example_world");
+                SaveWorld(gen, "example_world");
 
-            //    WorldRenderer.RenderWorld(gen, cons);
+                WorldRenderer.RenderWorld(gen, cons);
 
-            //    cons.Flush();
+                cons.Flush();
 
-            //    Console.ReadLine();
-            //}
+                Console.ReadLine();
+            }
 
             World world;
+            
             TryLoadWorld("example_world", out world);
             Cons console = new Cons(0, 0, (short)world.Width, (short)world.Height);
 

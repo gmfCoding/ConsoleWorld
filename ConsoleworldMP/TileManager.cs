@@ -11,18 +11,40 @@ namespace Consoleworld
     public static class TileManager
     {
         public static Dictionary<string, TileInfo> tiles = new Dictionary<string, TileInfo>();
+        public static Dictionary<byte, TileInfo> tileIDs = new Dictionary<byte, TileInfo>();
 
-        public static TileInfo empty = new TileInfo() { character = ' ', name = "empty", backgroundColour = ConsoleColor.Black, colour = ConsoleColor.Black };
+        public static TileInfo empty = new TileInfo("empty", ' ', 1, ConsoleColor.Black, ConsoleColor.Black) {  };
+
+
+        public static TileInfo GetTileInfo(byte id)
+        {
+            if (tileIDs.ContainsKey(id))
+            {
+                return tileIDs[id];
+            }
+            return null;
+        }
+
 
         static TileManager()
         {
-            tiles.Add(empty.name, empty);
+            tiles.Add(empty.Name, empty);
         }
 
-        public static void LoadTilesFromPath(string path = null)
+        public static void LoadTilesFromPath()
+        {
+            foreach (var item in LoadTilesFromPath(IOPaths.tiles))
+            {
+                tiles.Add(item.Name, item);
+                tileIDs.Add(item.TileID, item);
+            }
+        }
+
+        public static List<TileInfo> LoadTilesFromPath(string path = null)
         {
             if (path == null)
                 path = IOPaths.tiles;
+            List<TileInfo> tiles = new List<TileInfo>();
 
             foreach (var file in Directory.GetFiles(path))
             {
@@ -32,7 +54,7 @@ namespace Consoleworld
                     try
                     {
                         var tile = SaveLoadUtil.LoadTile(file);
-                        tiles.Add(tile.name, tile);
+                        tiles.Add(tile);
                     }
                     catch (Exception)
                     {
@@ -40,7 +62,10 @@ namespace Consoleworld
                     }
                 }
             }
+
+            return tiles;
         }
+
 
         public static TileInfo Get(string name)
         {

@@ -45,20 +45,18 @@ namespace CWEditorCLI
         public void Update()
         {
             Console.WriteLine("Drawing Mode!");
-            bool finished = false;
-            Stopwatch time = new Stopwatch();
 
-            int frameCount = 0;
-            while (!finished)
+            int frameCount  = 0;
+            BasicFrameTimer bft = new BasicFrameTimer();
+            while (bft.Loop(out double dt))
             {
                 frameCount++;
-                double dt = time.Elapsed.TotalSeconds;
-                time.Restart();
                 Console.CursorVisible = false;
 
+                bft.Stop();
                 RenderUtil.RenderWorld(world, console);
-
                 Input.Update();
+                bft.Start();
                 
                 curXR = Util.Clamp(curXR, 0.0, width);
                 curYR = Util.Clamp(curYR, 0.0, height);
@@ -73,78 +71,103 @@ namespace CWEditorCLI
                 if (Input.GetKey(KeyCode.Space))
                     draw = true;
 
-                if (Input.GetKeyDown(KeyCode.Q))
-                    radius--;
-                if (Input.GetKeyDown(KeyCode.E))
-                    radius++;
+                Input_Radius();
+                Input_Paint(draw, frameCount);
+                Input_Position(dt);
 
-
-
-                void SetPaintByOffset(int offset)
+                if (Input.GetKeyDown(KeyCode.X))
                 {
-                    int ind = (index + offset) % editor.GetTileNames().Count;
-                    if (editor.TryGetTile(editor.GetTileNames()[Math.Abs(ind)], out TileInfo tile))
-                    {
-                        index = ind;
-                        paint = tile;
-                    }
+                    bft.Exit();
+                    break;
                 }
+            }
+        }
 
-                if (Input.GetKeyDown(KeyCode.SQBRACKLEFT))
-                    SetPaintByOffset(1);
-                else if (Input.GetKeyDown(KeyCode.SQBRACKRIGHT))
-                    SetPaintByOffset(-1);
+        void SetPaintByOffset(int offset)
+        {
+            int ind = (index + offset) % editor.GetTileNames().Count;
+            if (editor.TryGetTile(editor.GetTileNames()[Math.Abs(ind)], out TileInfo tile))
+            {
+                index = ind;
+                paint = tile;
+            }
+        }
 
+        void Input_SelectPaint()
+        {
+            if (Input.GetKeyDown(KeyCode.SQBRACKLEFT))
+                SetPaintByOffset(1);
+            else if (Input.GetKeyDown(KeyCode.SQBRACKRIGHT))
+                SetPaintByOffset(-1);
+        }
 
-                if (paint != null)
+        void Input_Paint(bool paint, int frameCount)
+        {
+            PreviewOrPaint(paint, frameCount, 20, 5);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paint">Whether or not to apply the paint </param>
+        /// <param name="curFrameCount">The current amount of frames that have been rendered since the begining.</param>
+        /// <param name="frameCountOff">The amount of frames the preview is off.</param>
+        /// <param name="frameCountOn">The amount of frames the preview is on.</param>
+        void PreviewOrPaint(bool paint, int curFrameCount, int frameCountOff, int frameCountOn)
+        {
+            if (this.paint != null)
+            {
+                for (int i = curX - radius; i < curX + radius; i++)
                 {
-                    for (int i = curX - radius; i < curX + radius; i++)
+                    for (int j = curY - radius; j < curY + radius; j++)
                     {
-                        for (int j = curY - radius; j < curY + radius; j++)
+                        if (Util.IsInsideCircle(curX, curY, i, j, radius) && !Util.IsOutOfBounds(i, j, width, height))
                         {
-                            if (Util.IsInsideCircle(curX, curY, i, j, radius) && !Util.IsOutOfBounds(i, j, width, height))
+                            console.SetCursor(i, j);
+                            console.Write(this.paint.Character, this.paint.Colour, (curFrameCount % frameCountOff) > frameCountOn ? this.paint.BackgroundColour : ConsoleColor.DarkGray);
+                            if (paint)
                             {
-                                console.SetCursor(i, j);
-                                console.Write(paint.character, paint.colour, (frameCount % 20) > 5 ? paint.backgroundColour : ConsoleColor.DarkGray);
-                                if (draw)
-                                {
-                                    world[i, j] = paint;
-                                }
+                                world[i, j] = this.paint;
                             }
                         }
                     }
                 }
+            }
+        }
 
-                Console.BackgroundColor = ConsoleColor.Black;
+        void Pan()
+        { 
+        
+        }
 
-                if (Input.GetKey(KeyCode.Left))
-                {
-                    curXR -= dt * speed;
-                }
+        void Input_Radius()
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+                radius--;
+            if (Input.GetKeyDown(KeyCode.E))
+                radius++;
+        }
 
-                if (Input.GetKey(KeyCode.Right))
-                {
-                    curXR += dt * speed;
-                }
+        void Input_Position(double dt)
+        {
+            if (Input.GetKey(KeyCode.Left))
+            {
+                curXR -= dt * speed;
+            }
 
-                if (Input.GetKey(KeyCode.Up))
-                {
-                    curYR -= dt * speed;
-                }
+            if (Input.GetKey(KeyCode.Right))
+            {
+                curXR += dt * speed;
+            }
 
-                if (Input.GetKey(KeyCode.Down))
-                {
-                    curYR += dt * speed;
-                }
+            if (Input.GetKey(KeyCode.Up))
+            {
+                curYR -= dt * speed;
+            }
 
-
-                if (Input.GetKeyDown(KeyCode.X))
-                {
-                    finished = true;
-                    break;
-                }
-
-                time.Stop();
+            if (Input.GetKey(KeyCode.Down))
+            {
+                curYR += dt * speed;
             }
         }
     }

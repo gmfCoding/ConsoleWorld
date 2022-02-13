@@ -10,7 +10,7 @@ namespace Consoleworld
     public static class WorldRenderer
     {
 
-        public static void RenderWorld(World world, Cons console)
+        public static void RenderWorld(World world, FastConsoleInstance console)
         {
             int width = world.Width;
             int height = world.Height;
@@ -22,7 +22,7 @@ namespace Consoleworld
                     if (world.world[y , x] != 0x0b)
                     {
                         TileInfo t = TileManager.GetTileInfo(world.world[y, x]);
-                        console.WriteAt(t.Character, x, y,t.Colour, t.BackgroundColour);
+                        console.WriteAt(t.Character, x, y, new ColourPair(t.Colour, t.BackgroundColour));
                     }
                 }
             }

@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicFrameTimer.cs" />
-    <Compile Include="ColourConsole.cs" />
     <Compile Include="DefaultTiles.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IBinarySerialisation.cs" />
@@ -66,7 +65,7 @@
     <Compile Include="TileInfo.cs" />
     <Compile Include="TileManager.cs" />
     <Compile Include="World.cs" />
-    <Compile Include="WorldArea.cs" />
+    <Compile Include="WorldGen.cs" />
     <Compile Include="WorldRenderer.cs" />
     <Compile Include="Zone.cs" />
     <Compile Include="ZoneArea.cs" />

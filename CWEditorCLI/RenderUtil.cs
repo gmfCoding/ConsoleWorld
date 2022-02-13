@@ -10,7 +10,7 @@ namespace CWEditorCLI
 {
     public static class RenderUtil
     {
-        public static void RenderWorld(TileInfo[,] world, Cons console)
+        public static void RenderWorld(TileInfo[,] world, FastConsoleInstance console)
         {
             int width = world.GetLength(0);
             int height = world.GetLength(1);
@@ -20,7 +20,7 @@ namespace CWEditorCLI
                 {
                     if (world[i, j] != null)
                     {
-                        console.WriteAt(world[i, j].Character, i, j, world[i, j].Colour, world[i, j].BackgroundColour);
+                        console.WriteAt(world[i, j].Character, i, j, new ColourPair(world[i, j].Colour, world[i, j].BackgroundColour));
                     }
                 }
             }

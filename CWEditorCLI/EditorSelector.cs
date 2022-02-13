@@ -1,53 +1,40 @@
-﻿using System;
+﻿using Consoleworld;
+using FastConsole;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace CWEditorCLI
 {
     class EditorSelector
     {
+        EditorInstance editor => EditorInstance.Get();
 
-        public Dictionary<string, Func<IEditor>> editors = new Dictionary<string, Func<IEditor>>();
+        public InputPossiblities possiblities = new InputPossiblities(true, true, PrintHelp);
 
-        public void Register(string name, Func<IEditor> creator)
+        private static void PrintHelp(IEnumerable<InputPossiblity> possiblities)
         {
-            editors.Add(name, creator);
+            FConsole.WriteLine("Commands:", ColourStyles.command);
+            InputPossiblities.PrintHelp(possiblities.Where(x => !(x.extra is PossiblityType) || (x.extra is PossiblityType pt && pt == PossiblityType.Command)));
+            FConsole.WriteLine("Editors:", ColourStyles.editor);
+            InputPossiblities.PrintHelp(possiblities.Where(x => x.extra is PossiblityType pt && pt == PossiblityType.Editor));
+            FConsole.WriteLine();
+        }
+        
+        public EditorSelector()
+        {
+            possiblities.Add(new InputPossiblity("world", "Open the world editor, for editing/viewing maps.", editor.world.Open, ConsoleColor.Yellow, PossiblityType.Editor));
+            possiblities.Add(new InputPossiblity("tile", "Open the tile editor, for editing/viewing tile definitions.", editor.tile.Open, ConsoleColor.Yellow, PossiblityType.Editor));
         }
 
-        public void Selection()
+        public void Input()
         {
-            PrintEditors();
-            bool exit = false;
-            while (!exit)
-            {
-                Com.WriteModeInfo("#selection - The editor to open.");
-                Com.WriteMode("selection:");
-                string selection = Console.ReadLine().ToLower();
-                if (selection == "help")
-                {
-                    PrintEditors();
-                }
-                OpenEditor(selection);
-            }
-        }
-
-        void PrintEditors()
-        {
-            Com.WriteEditor("Editors:");
-            foreach (var item in editors.Keys)
-            {
-                Com.WriteCommand(item);
-            }
-        }
-
-        void OpenEditor(string name)
-        {
-            if (editors.TryGetValue(name, out Func<IEditor> creator))
-            {
-                creator.Invoke().Open();
-            }
+            possiblities.PrintHelp();
+            possiblities.Input();
         }
     }
 }

@@ -4,19 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CWEditorCLI
+namespace FastConsole
 {
-    struct CSaveCursorCon
+    public struct CursorState
     {
         public int x;
         public int y;
-        public CSaveCursorCon(bool save = false)
+        public CursorState(bool save = false)
         {
             x = 0;
             y = 0;
             if (save)
                 Save();
-
         }
 
         public void Save()

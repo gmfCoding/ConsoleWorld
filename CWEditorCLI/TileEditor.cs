@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Consoleworld;
+using FastConsole;
 
 namespace CWEditorCLI
 {
-    class TileEditor : IEditor
+    public class TileEditor : IEditor
     {
         Dictionary<string, TileInfo> tiles = new Dictionary<string, TileInfo>();
         Dictionary<TileInfo, bool> dirtyList = new Dictionary<TileInfo, bool>();
@@ -65,10 +66,10 @@ namespace CWEditorCLI
         {
             foreach (var tile in tiles.Values)
             {
-                Conlog.WriteLine($"{tile.Name}:", ConsoleColor.Yellow);
-                Conlog.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
-                Conlog.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
-                Conlog.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
+                FConsole.WriteLine($"{tile.Name}:", ConsoleColor.Yellow);
+                FConsole.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
+                FConsole.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
+                FConsole.WriteLine($"{tile.Character}{tile.Character}{tile.Character}", tile.Colour);
                 Console.WriteLine();
             }
         }
@@ -77,7 +78,7 @@ namespace CWEditorCLI
         {
             if (tiles.ContainsKey(name) == false)
             {
-                Console.WriteLine("Couldn't find tile:{name}, would you like to create it?");
+                FConsole.WriteLine("Couldn't find tile:{name}, would you like to create it?");
                 Create(name);
             }
             TileInfo def = tiles[name];
@@ -105,13 +106,13 @@ namespace CWEditorCLI
 
         public void Edit()
         {
-            string tileName = Console.ReadLine();
+            string tileName = FConsole.ReadLine();
         }
 
         public void Open()
         {
             commands.Help();
-            Conz.WriteLine("#mode, The TileEditor mode.", ConsoleColor.DarkGray, once: true);
+            FConsole.WriteLine("#mode, The TileEditor mode.", ConsoleColor.DarkGray);
             while (!commands.exit)
             {
                 commands.ReadLine("mode:", ConsoleColor.DarkCyan);
@@ -139,7 +140,7 @@ namespace CWEditorCLI
 
         void Help()
         {
-            Console.WriteLine("TileEditor: start by typing edit or create:");
+            FConsole.WriteLine("TileEditor: start by typing edit or create:");
 
         }
     }

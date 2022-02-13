@@ -14,38 +14,55 @@ namespace CWEditorCLI
 {
     class Program
     {
-
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
-
+        public static EditorInstance instance;
         static void Main(string[] args)
         {
-            MoveWindow(Process.GetCurrentProcess().MainWindowHandle, 0, 0, 550, 900, true);
+            FConsole.ProcessColours = true;
+
+            // Args to skip console size setup: -w 550 -h 900 -acceptSize
+            ArgumentParser arguments = new ArgumentParser(args);
+            
+            if (arguments.TryGetValue<int>("h", out int h))
+            {
+                if (arguments.TryGetValue<int>("w", out int w))
+                {
+                    MoveWindow(Process.GetCurrentProcess().MainWindowHandle, 400, 250, w, h, true);
+                }
+            }
+
+            
+            if (!arguments.TryGetValue("acceptSize"))
+            {
+                FConsole.WriteLine("<red>Please set the size of the window before continuing then press enter...");
+                FConsole.ReadLine();
+                FConsole.LockSize();
+            }
+
+            FConsole.QueueInput("world");
+            FConsole.QueueInput("create");
+            FConsole.QueueInput("example");
+
+            FConsole.QueueInput("10");
+
+
             Console.CursorVisible = false;
 
-            //Cons console = new Cons(0, 0, 50, 50);
 
+            instance = new EditorInstance();
+            EditorInstance.instance = instance;
 
-            //WorldBrush wb = new WorldBrush(tileEditor, 50, 50, world);
-            //wb.Update();
+            instance.tile = new TileEditor();
+            instance.tile.LoadFromPath();
 
-            TileEditor tileEditor = new TileEditor();
-            tileEditor.LoadFromPath();
+            instance.world = new WorldEditor();
 
-            WorldEditor worldEditor = new WorldEditor();
-            EditorSelector edsel = new EditorSelector();
+            EditorSelector selector = new EditorSelector();
+            selector.Input();
 
-            References.AddReference("tile_editor", tileEditor);
-            References.AddReference("world_editor", worldEditor);
-            References.AddReference("editor_selector", edsel);
-
-            edsel.Register("tile", () => tileEditor);
-            edsel.Register("world", () => worldEditor);
-
-            edsel.Selection();
-
-            Console.ReadLine();
+            FConsole.ReadLine();
         }
     }
 }

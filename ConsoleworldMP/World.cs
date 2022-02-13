@@ -31,19 +31,6 @@ namespace Consoleworld
             return zones.ToList();
         }
 
-        public void Randomise()
-        {
-            List<TileInfo> tiles = TileManager.tiles.Values.ToList();
-            Random r = new Random();
-            for (int y = 0; y < Height; y++)
-            {
-                for (int x = 0; x < Width; x++)
-                {
-                    world[y, x] = tiles.ElementAt(r.Next(0, tiles.Count)).TileID;
-                }
-            }
-        }
-
         public void Fill(TileInfo tile)
         {
             for (int y = 0; y < Height; y++)
@@ -65,7 +52,31 @@ namespace Consoleworld
         // zoneCount
         // zoneList
 
+        public Tile Get(int x, int y)
+        {
+            if (Inside(x,y))
+            {
+                return world[y, x];
+            }
 
+            return DefaultTiles.empty;
+        }
+
+
+        public bool Set(int x, int y, Tile tile)
+        {
+            if (Inside(x, y))
+            {
+                world[y, x] = tile;
+                return true;
+            }
+            return false;
+        }
+
+        public bool Inside(int x, int y)
+        {
+            return x >= 0 && x < Width && y >= 0 && y < Height;
+        }
 
         public void Read(BinaryReader br)
         {

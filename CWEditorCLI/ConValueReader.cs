@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FastConsole;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,47 +11,53 @@ namespace CWEditorCLI
     {
         public delegate bool TryParseDelegate<U>(string input, out U output);
 
-        string askText;
+        string defaultAsk;
         private readonly string errorText;
         TryParseDelegate<T> parser;
 
-        public ConValueReader(string askText, string errorText, TryParseDelegate<T> parser)
+        public ConValueReader(string defaultAsk, string errorText, TryParseDelegate<T> parser)
         {
-            this.askText = askText;
+            this.defaultAsk = defaultAsk;
             this.errorText = errorText;
             this.parser = parser;
         }
 
-        public T Read()
+        public T Read(string ask = null, bool allowExit = false)
         {
+            if (ask == null)
+            {
+                ask = defaultAsk;
+            }
+
             T result = default(T);
             int attempts = 5;
 
-            while (attempts > 0)
+            while (attempts > 0 || !allowExit)
             {
                 attempts--;
 
-                Console.Write(askText);
-                var str = Console.ReadLine();
+                var str = Conio.AskLine(ask);
                 if (parser(str, out result))
                 {
                     return result;
                 }
                 else
                 {
-                    Console.WriteLine(errorText);
+                    FConsole.WriteLine(errorText, ColourStyles.error);
                 }
 
-                if (attempts <= 0)
+                if (attempts <= 0 && allowExit)
                 {
-                    Console.WriteLine("Input is wrong, would you like more attempts?");
-                    Console.WriteLine("y/n");
+
+                    FConsole.WriteLine("Input is wrong, would you like more attempts?");
                     bool invalid = true;
                     while (invalid)
                     {
-                        char ch = Console.ReadKey().KeyChar;
+                        FConsole.Write("\ry/n:");
+                        char ch = FConsole.ReadKey().KeyChar;
                         if (ch == 'y' || ch == 'Y')
                         {
+                            //FConsole.NewLine();
                             invalid = false;
                             attempts = 5;
                         }

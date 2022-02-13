@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Consoleworld;
+using FastConsole;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,46 +14,57 @@ namespace CWEditorCLI
         Dictionary<string, InputPossiblity> possiblityDict = new Dictionary<string, InputPossiblity>();
         bool done = false;
 
-        public InputPossiblities(bool cancel, bool help)
+        Action<IEnumerable<InputPossiblity>> printHelp;
+
+        public InputPossiblities(bool cancel, bool help, Action<IEnumerable<InputPossiblity>> printHelp = null)
         {
+            if (printHelp == null)
+            {
+                this.printHelp = PrintHelp;
+            }
+            else
+            {
+                this.printHelp += printHelp;
+            }
+
             if (cancel)
             {
-                Add(new InputPossiblity(() => { this.done = true; }, "returns.", "back", "return", "exit"));
+                Add(new InputPossiblity("exit", "Returns.", () => { this.done = true;}));
             }
 
             if (help)
             {
-                Add(new InputPossiblity(PrintHelp, "returns.", "help", "?"));
+                Add(new InputPossiblity("help", "Displays this help menu.", () => this.printHelp(possiblities)));
+            }
+        }
+
+        public static void PrintHelp(IEnumerable<InputPossiblity> inputPossiblities)
+        {
+            int i = 0;
+            foreach (var item in inputPossiblities)
+            {
+                i++;
+                FConsole.WriteLine($"<{item.colour}>" + item.name + $"<white> : <white>" + item.description);
             }
         }
 
         public void PrintHelp()
         {
-            foreach (var item in possiblities)
-            {
-                Console.WriteLine('"' + string.Join(", ", item.aliases) + "\" : " + item.description); 
-            }
+            printHelp(possiblities);
         }
 
         public void Add(InputPossiblity possibility)
         {
             possiblities.Add(possibility);
-
-            foreach (var item in possibility.aliases)
-            {
-                if (possiblityDict.ContainsKey(item) == false)
-                    possiblityDict.Add(item, possibility);
-            }
+            possiblityDict.Add(possibility.name, possibility);
         }
-
 
         public void Input()
         {
-            
             while (!done)
             {
                 var cv = new CursorVisibility(true);
-                string read = Console.ReadLine();
+                string read = Conio.Ask();
 
                 if (possiblityDict.ContainsKey(read))
                 {
@@ -60,21 +73,26 @@ namespace CWEditorCLI
 
                 cv.Pop();
             }
-
         }
     }
 
     public class InputPossiblity
     {
-        public readonly List<string> aliases;
+        public object extra;
+        public ConsoleColor colour;
+        public readonly string name;
         public readonly string description;
         public readonly Action act;
 
-        public InputPossiblity(Action act, string description, params string[] aliases)
+        public const ConsoleColor defaultColour = ConsoleColor.Cyan;
+
+        public InputPossiblity(string name, string description, Action act, ConsoleColor aliasColour = defaultColour, object obj = null)
         {
-            this.aliases = aliases.ToList();
+            this.colour = aliasColour;
+            this.name = name;
             this.description = description;
             this.act = act;
+            this.extra = obj;
         }
     }
 }

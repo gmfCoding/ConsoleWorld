@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CWEditorCLI", "CWEditorCLI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastConsole", "FastConsole\FastConsole.csproj", "{DDA1C290-40A6-4DC5-B43F-F0C56D0B4F7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeakConsole", "PeakConsole\PeakConsole.csproj", "{28F86A81-569B-4A89-B685-FB7FA60E6950}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FConsoleExample", "FConsoleExample\FConsoleExample.csproj", "{611FF76C-8DBC-453E-AA3C-7406BA722915}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{DDA1C290-40A6-4DC5-B43F-F0C56D0B4F7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDA1C290-40A6-4DC5-B43F-F0C56D0B4F7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDA1C290-40A6-4DC5-B43F-F0C56D0B4F7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F86A81-569B-4A89-B685-FB7FA60E6950}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F86A81-569B-4A89-B685-FB7FA60E6950}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F86A81-569B-4A89-B685-FB7FA60E6950}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F86A81-569B-4A89-B685-FB7FA60E6950}.Release|Any CPU.Build.0 = Release|Any CPU
+		{611FF76C-8DBC-453E-AA3C-7406BA722915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{611FF76C-8DBC-453E-AA3C-7406BA722915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{611FF76C-8DBC-453E-AA3C-7406BA722915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{611FF76C-8DBC-453E-AA3C-7406BA722915}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

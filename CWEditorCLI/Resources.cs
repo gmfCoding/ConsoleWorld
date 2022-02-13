@@ -1,4 +1,5 @@
 ﻿using Consoleworld;
+using FastConsole;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,7 +59,7 @@ namespace CWEditorCLI
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine($"Couldn't save : {Path.Combine(path, item.Name)}.tile");
+                    FConsole.WriteLine($"Couldn't save : {Path.Combine(path, item.Name)}.tile");
                 }
             }
         }
@@ -75,8 +76,8 @@ namespace CWEditorCLI
                     tiles.Add(LoadTileDefinition(item));
                 }
                 catch (Exception)
-                {
-                    Console.WriteLine($"Couldn't load {Path.GetFullPath(item)}");
+                {   
+                    FConsole.WriteLine($"Couldn't load {Path.GetFullPath(item)}");
                 }
             }
 

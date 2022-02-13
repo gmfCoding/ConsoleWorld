@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FastConsole;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,8 +32,8 @@ namespace CWEditorCLI
 
         public void ReadLine(string str, ConsoleColor col)
         {
-            Conz.Write(str, col, once:true);
-            string command = Console.ReadLine();
+            FConsole.Write(str, col);
+            string command = FConsole.ReadLine();
             if (commands.ContainsKey(command))
             {
                 commands[command].Invoke();
@@ -43,7 +44,7 @@ namespace CWEditorCLI
         {
             while (!exit)
             {
-                string command = Console.ReadLine();
+                string command = FConsole.ReadLine();
                 if (commands.ContainsKey(command))
                 {
                     commands[command].Invoke();
@@ -62,7 +63,7 @@ namespace CWEditorCLI
             {
                 if (item != "help" && item != "exit")
                 {
-                    Conlog.WriteLine(item, ConsoleColor.Green);
+                    FConsole.WriteLine(item, ConsoleColor.Green);
                 }
             }
         }

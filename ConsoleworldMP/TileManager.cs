@@ -1,4 +1,5 @@
 ﻿using Consoleworld;
+using FastConsole;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,7 @@ namespace Consoleworld
     {
         public static Dictionary<string, TileInfo> tiles = new Dictionary<string, TileInfo>();
         public static Dictionary<byte, TileInfo> tileIDs = new Dictionary<byte, TileInfo>();
-
+        
         public static TileInfo empty = new TileInfo("empty", ' ', 1, ConsoleColor.Black, ConsoleColor.Black) {  };
 
 
@@ -25,18 +26,22 @@ namespace Consoleworld
             return null;
         }
 
-
         static TileManager()
         {
-            tiles.Add(empty.Name, empty);
+            RegisterTile(DefaultTiles.empty);
+        }
+
+        public static void RegisterTile(TileInfo tile)
+        {
+            tiles.Add(tile.Name, tile);
+            tileIDs.Add(tile.TileID, tile);
         }
 
         public static void LoadTilesFromPath()
         {
             foreach (var item in LoadTilesFromPath(IOPaths.tiles))
             {
-                tiles.Add(item.Name, item);
-                tileIDs.Add(item.TileID, item);
+                RegisterTile(item);
             }
         }
 
@@ -44,7 +49,7 @@ namespace Consoleworld
         {
             if (path == null)
                 path = IOPaths.tiles;
-            List<TileInfo> tiles = new List<TileInfo>();
+            List<TileInfo> retList = new List<TileInfo>();
 
             foreach (var file in Directory.GetFiles(path))
             {
@@ -54,16 +59,16 @@ namespace Consoleworld
                     try
                     {
                         var tile = SaveLoadUtil.LoadTile(file);
-                        tiles.Add(tile);
+                        retList.Add(tile);
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine($"Couldn't load tile:{file.Remove(0, path.Length)}");
+                        FConsole.WriteLine($"Couldn't load tile:{file.Remove(0, path.Length)}");
                     }
                 }
             }
 
-            return tiles;
+            return retList;
         }
 
 

@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 
 namespace CWEditorCLI
 {
-    class WorldEditor : IEditor
+    public class WorldEditor : IEditor
     {
         string levelName;
         int areaID;
-        TileInfo[,] tiles;
 
         int width;
         int height;
+
+        TileInfo[,] tiles;
+
+        bool worldLoaded = false;
 
         WorldBrush brush;
 
@@ -27,10 +30,8 @@ namespace CWEditorCLI
 
         public WorldEditor()
         {
-            possiblities.Add(new InputPossiblity(CreateWorldDialogue, "Create a new World.", "create", "new"));
-            possiblities.Add(new InputPossiblity(OpenWorldDialogue, "Open a world to view/edit.", "open", "load"));
-            tiles = new TileInfo[50, 50];
-            brush = new WorldBrush(References.GetReference<TileEditor>("tile_editor"), 50, 50, tiles);
+            possiblities.Add(new InputPossiblity("create", "Create a new World.", CreateWorldDialogue, ConsoleColor.Yellow));
+            possiblities.Add(new InputPossiblity("load", "Open a world to view/edit.", OpenWorldDialogue, ConsoleColor.Yellow));
         }
 
         public string GetName()
@@ -38,9 +39,9 @@ namespace CWEditorCLI
             return $"WorldEditor:{levelName}";
         }
             
-
         public void Open()
         {
+            possiblities.PrintHelp();
             possiblities.Input();
         }
 
@@ -49,21 +50,27 @@ namespace CWEditorCLI
         /// </summary>
         void OpenWorldDialogue()
         {
-            Console.WriteLine("World file path:");
+            FConsole.WriteLine("World file path:");
         }
 
 
         /// <summary>
         /// Edit the currently loaded world
         /// </summary>
-        void WorldEdit()
+        public void WorldEdit()
         {
-            bool done = false;
-            Cons console = new Cons(0, 0, 50, 50);
-            BasicFrameTimer bft = new BasicFrameTimer();
-            while (bft.Loop(out double dt))
+            if (worldLoaded)
             {
-                brush.Update();
+                FastConsoleInstance console = new FastConsoleInstance(0, 0, 50, 50);
+                BasicFrameTimer bft = new BasicFrameTimer();
+                while (bft.Loop(out double dt))
+                {
+                    brush.Update();
+                }
+            }
+            else
+            {
+                FConsole.WriteLine("<red>Unable to edit world as there is no currently loaded world.");
             }
         }
 
@@ -72,53 +79,68 @@ namespace CWEditorCLI
         /// </summary>
         void WorldViewer()
         {
-            Cons console = new Cons(0, 0, 50, 50);
-            BasicFrameTimer bft = new BasicFrameTimer();
-            while (bft.Loop(out double dt))
+            if (worldLoaded)
             {
-                Console.CursorVisible = false;
-                RenderUtil.RenderWorld(tiles, console);
-
-                Input.Update();
-
-                curX = Util.Clamp((int)curX, 0, width);
-                curY = Util.Clamp((int)curY, 0, height);
-
-
-                if (Input.GetKey(KeyCode.Left))
+                FastConsoleInstance console = new FastConsoleInstance(0, 0, 50, 50);
+                BasicFrameTimer bft = new BasicFrameTimer();
+                while (bft.Loop(out double dt))
                 {
-                    curX++;
-                }
+                    Console.CursorVisible = false;
+                    RenderUtil.RenderWorld(tiles, console);
 
-                if (Input.GetKey(KeyCode.Right))
-                {
-                    curX++;
-                }
+                    Input.Update();
 
-                if (Input.GetKey(KeyCode.Up))
-                {
-                    curY++;
-                }
+                    curX = Util.Clamp((int)curX, 0, width);
+                    curY = Util.Clamp((int)curY, 0, height);
 
-                if (Input.GetKey(KeyCode.Down))
-                {
-                    curY++;
-                }
 
-                if (Input.GetKeyDown(KeyCode.X))
-                {
-                    bft.Exit();
-                    break;
+                    if (Input.GetKey(KeyCode.Left))
+                    {
+                        curX++;
+                    }
+
+                    if (Input.GetKey(KeyCode.Right))
+                    {
+                        curX++;
+                    }
+
+                    if (Input.GetKey(KeyCode.Up))
+                    {
+                        curY++;
+                    }
+
+                    if (Input.GetKey(KeyCode.Down))
+                    {
+                        curY++;
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.X))
+                    {
+                        bft.Exit();
+                        break;
+                    }
                 }
+            }
+            else
+            {
+                FConsole.WriteLine("<red>Unable to view world as there is no currently loaded world.");
             }
         }
 
         void CreateWorldDialogue()
         {
-            Console.WriteLine("Creating a new world, please specify:");
-            string worldName = ConReadConfirm.Read("Please enter a world name. \nName:");
-            int width = ConReaders.widthReader.Read();
-            int height = ConReaders.heightReader.Read();
+            FConsole.WriteLine("<green>Creating a new world, please specify:");
+            string worldName = ConReadConfirm.Read("WorldName:");
+
+            int width = ConReaders.intReader.Read("width:");
+            int height = ConReaders.intReader.Read("height:");
+
+            tiles = new TileInfo[height, width];
+            FConsole.WriteLine($"{ColourStyles.say}Created world:{ColourStyles.world}{worldName} {ColourStyles.ask}size:<blue>{width}<white>x<blue>{height}.");
+
+            levelName = worldName;
+            areaID = worldName.GetHashCode();
+            brush = new WorldBrush(EditorInstance.Get().tile, width, height, tiles);
         }
     }
 }

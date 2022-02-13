@@ -45,14 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgumentParser.cs" />
+    <Compile Include="ColourStyles.cs" />
     <Compile Include="ConReaders.cs" />
     <Compile Include="ConReadConfirm.cs" />
     <Compile Include="ConValueReader.cs" />
-    <Compile Include="CSaveCursorCon.cs" />
+    <Compile Include="Conio.cs" />
     <Compile Include="CursorVisibility.cs" />
+    <Compile Include="EditorInstance.cs" />
+    <Compile Include="EditorSelector.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InputPossiblities.cs" />
     <Compile Include="NativeKeyboard.cs" />
+    <Compile Include="PossiblityType.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -65,12 +70,7 @@
     <Compile Include="ScreenBuffer.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="WorldBrush.cs" />
-    <Compile Include="Com.cs" />
     <Compile Include="CommandSelection.cs" />
-    <Compile Include="ConcolStack.cs" />
-    <Compile Include="Conlog.cs" />
-    <Compile Include="Conz.cs" />
-    <Compile Include="EditorSelector.cs" />
     <Compile Include="IEditor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

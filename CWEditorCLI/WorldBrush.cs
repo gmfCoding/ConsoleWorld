@@ -11,7 +11,7 @@ namespace CWEditorCLI
 {
     class WorldBrush
     {
-        Cons console = new Cons(0, 0, 50, 50);
+        FastConsoleInstance console = new FastConsoleInstance(0, 0, 50, 50);
         TileEditor editor;
 
         int index;
@@ -44,7 +44,7 @@ namespace CWEditorCLI
 
         public void Update()
         {
-            Console.WriteLine("Drawing Mode!");
+            FConsole.WriteLine("Drawing Mode!");
 
             int frameCount  = 0;
             BasicFrameTimer bft = new BasicFrameTimer();
@@ -124,7 +124,7 @@ namespace CWEditorCLI
                         if (Util.IsInsideCircle(curX, curY, i, j, radius) && !Util.IsOutOfBounds(i, j, width, height))
                         {
                             console.SetCursor(i, j);
-                            console.Write(this.paint.Character, this.paint.Colour, (curFrameCount % frameCountOff) > frameCountOn ? this.paint.BackgroundColour : ConsoleColor.DarkGray);
+                            console.Write(this.paint.Character, new ColourPair(this.paint.Colour, (curFrameCount % frameCountOff) > frameCountOn ? this.paint.BackgroundColour : ConsoleColor.DarkGray));
                             if (paint)
                             {
                                 world[i, j] = this.paint;

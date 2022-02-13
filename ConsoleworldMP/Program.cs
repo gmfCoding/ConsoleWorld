@@ -12,6 +12,7 @@ namespace Consoleworld
     {
         static void Main(string[] args)
         {
+
             //TODO:
             // Figure out why saving and loading for the world tiles is incorrect
             // Currently Saving a world, then loading it back up has different results.
@@ -23,7 +24,7 @@ namespace Consoleworld
             {
                 World gen = new World();
                 gen.Init("example_world", 3, 3);
-                Cons cons = new Cons(0, 0, (short)gen.Width, (short)gen.Height);
+                FastConsoleInstance cons = new FastConsoleInstance(0, 0, (short)gen.Width, (short)gen.Height);
                 //gen.Randomise();
                 gen.Fill(TileManager.Get("water"));
                 gen.world[1, 1] = TileManager.Get("sand");
@@ -34,13 +35,13 @@ namespace Consoleworld
 
                 cons.Flush();
 
-                Console.ReadLine();
+                FConsole.ReadLine();
             }
 
             World world;
             
             TryLoadWorld("example_world", out world);
-            Cons console = new Cons(0, 0, (short)world.Width, (short)world.Height);
+            FastConsoleInstance console = new FastConsoleInstance(0, 0, (short)world.Width, (short)world.Height);
 
 
             while (true)

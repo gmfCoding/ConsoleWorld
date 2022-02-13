@@ -16,7 +16,7 @@ namespace Consoleworld
         public static TileInfo fire = new TileInfo("fire", 'M', 5, ConsoleColor.Blue, ConsoleColor.DarkBlue);
 
 
-        public static IEnumerable<TileInfo> GetTiles()
+        public static IEnumerable<TileInfo> GetTiles() 
         {
             yield return water;
             yield return sand;

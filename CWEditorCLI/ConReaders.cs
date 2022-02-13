@@ -8,7 +8,13 @@ namespace CWEditorCLI
 {
     public static class ConReaders
     {
-        public static ConValueReader<int> widthReader = new ConValueReader<int>("Width:", "Unrecognised integer, make sure you're using whole numbers", int.TryParse);
-        public static ConValueReader<int> heightReader = new ConValueReader<int>("Height:", "Unrecognised integer, make sure you're using whole numbers", int.TryParse);
+        public static bool StringToString(string strin, out string strout)
+        {
+            strout = strin;
+            return true;
+        }
+
+        public static ConValueReader<int> intReader = new ConValueReader<int>("int:", "Unrecognised integer, make sure you're using whole numbers", int.TryParse);
+        public static ConValueReader<string> strReader = new ConValueReader<string>("string:", "Make sure the text that you're entering is correct.", StringToString);
     }
 }

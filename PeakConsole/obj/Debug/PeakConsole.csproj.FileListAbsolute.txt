@@ -1,7 +1,0 @@
-G:\Projects\Software\C#\ConsoleworldMP\PeakConsole\obj\Debug\PeakConsole.csproj.AssemblyReference.cache
-G:\Projects\Software\C#\ConsoleworldMP\PeakConsole\obj\Debug\PeakConsole.csproj.CoreCompileInputs.cache
-G:\Projects\Software\C#\ConsoleworldMP\PeakConsole\bin\Debug\PeakConsole.exe.config
-G:\Projects\Software\C#\ConsoleworldMP\PeakConsole\bin\Debug\PeakConsole.exe
-G:\Projects\Software\C#\ConsoleworldMP\PeakConsole\bin\Debug\PeakConsole.pdb
-G:\Projects\Software\C#\ConsoleworldMP\PeakConsole\obj\Debug\PeakConsole.exe
-G:\Projects\Software\C#\ConsoleworldMP\PeakConsole\obj\Debug\PeakConsole.pdb

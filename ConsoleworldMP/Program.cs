@@ -19,6 +19,28 @@ namespace Consoleworld
             // Is it to do with the direction that the world is saved in?
             // Is the unique tile id compression approach just bad?
 
+            MapGenerator mgen = new MapGenerator();
+            mgen.mapHeight = 100;
+            mgen.mapWidth = 100;
+            mgen.lacunarity = 3;
+            mgen.noiseScale = 0.1f;
+            mgen.persistance = 0.3f;
+            mgen.offsetX = 100;
+            mgen.offsetY = 100;
+            mgen.octaves = 3;
+            mgen.regions = new TerrainType[]
+            {
+                new TerrainType() { name = '~', height = 0.5f, colour = new ColourPair(ConsoleColor.Blue, ConsoleColor.DarkBlue)},
+                new TerrainType() { name = '#', height = 0.55f, colour = new ColourPair(ConsoleColor.DarkYellow, ConsoleColor.Yellow)},
+                new TerrainType() { name = '"', height = 0.7f, colour = new ColourPair(ConsoleColor.Green, ConsoleColor.DarkGreen)},
+                new TerrainType() { name = '#', height = 0.8f, colour = new ColourPair(ConsoleColor.Gray, ConsoleColor.DarkGray)},
+                new TerrainType() { name = '^', height = 0.9f, colour = new ColourPair(ConsoleColor.White, ConsoleColor.DarkGray)}
+            };
+
+            mgen.GenerateMap();
+
+            Console.ReadLine();
+
             TileManager.LoadTilesFromPath();
 
             {

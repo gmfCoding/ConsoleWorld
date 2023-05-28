@@ -66,18 +66,13 @@
     <Compile Include="TileManager.cs" />
     <Compile Include="World.cs" />
     <Compile Include="WorldGen.cs" />
+    <Compile Include="WorldGenData.cs" />
     <Compile Include="WorldRenderer.cs" />
     <Compile Include="Zone.cs" />
     <Compile Include="ZoneArea.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FastConsole\FastConsole.csproj">
-      <Project>{DDA1C290-40A6-4DC5-B43F-F0C56D0B4F7F}</Project>
-      <Name>FastConsole</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

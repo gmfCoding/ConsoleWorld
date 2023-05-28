@@ -89,10 +89,6 @@
       <Project>{d9195f79-a30c-40d7-90c8-12d2bc59fb19}</Project>
       <Name>ConsoleworldCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FastConsole\FastConsole.csproj">
-      <Project>{dda1c290-40a6-4dc5-b43f-f0c56d0b4f7f}</Project>
-      <Name>FastConsole</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
